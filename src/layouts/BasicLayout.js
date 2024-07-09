@@ -102,10 +102,7 @@ const BasicLayout = ({children, props}) => {
                     {drawer}
                 </Drawer>
             </nav>
-
             {children}
-
-
         </Box>
     );
 }

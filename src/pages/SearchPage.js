@@ -53,7 +53,7 @@ const SearchPage = (props) =>{
                 <Toolbar />
                 <Card>
                     <CardContent>
-                        <h5 className="font-weight-bolder">DBMS Data Search</h5>
+                        <h5 className="font-weight-bolder">Data Search</h5>
                         <Grid container spacing={3}>
                             <Grid item xs={12} sm={4}>
                                 <FormControl fullWidth>
@@ -109,15 +109,17 @@ const SearchPage = (props) =>{
                                     </Select>
                                 </FormControl>
                             </Grid>
+
                             <Grid item xs={12}>
+                                <h5 className="font-weight-bolder">Data type</h5>
                                 <FormControl component="fieldset">
                                     <RadioGroup row value={dataType} onChange={(e) => setDataType(e.target.value)}>
-                                        {/* 예시 타입 데이터 */}
+
                                         {types.map((type, index) => (
                                             <FormControlLabel
                                                 key={index}
                                                 value={type.value}
-                                                control={<Radio />}
+                                                control={<Radio/>}
                                                 label={type.text}
                                             />
                                         ))}
@@ -125,10 +127,10 @@ const SearchPage = (props) =>{
                                 </FormControl>
                             </Grid>
                             <Grid item xs={12}>
-                                <FormControl component="fieldset">
+                            <FormControl component="fieldset">
                                     <RadioGroup row value={isTestset} onChange={(e) => setIsTestset(e.target.value)}>
-                                        <FormControlLabel value="1" control={<Radio />} label="O" />
-                                        <FormControlLabel value="0" control={<Radio />} label="X" />
+                                        <FormControlLabel value="1" control={<Radio/>} label="O"/>
+                                        <FormControlLabel value="0" control={<Radio/>} label="X"/>
                                     </RadioGroup>
                                 </FormControl>
                             </Grid>
@@ -175,7 +177,7 @@ const SearchPage = (props) =>{
                                         type="date"
                                         value={date}
                                         onChange={(e) => setDate(e.target.value)}
-                                        InputLabelProps={{ shrink: true }}
+                                        InputLabelProps={{shrink: true}}
                                     />
                                 </FormControl>
                             </Grid>
@@ -186,7 +188,7 @@ const SearchPage = (props) =>{
                                         type="date"
                                         value={endDate}
                                         onChange={(e) => setEndDate(e.target.value)}
-                                        InputLabelProps={{ shrink: true }}
+                                        InputLabelProps={{shrink: true}}
                                     />
                                 </FormControl>
                             </Grid>
@@ -200,7 +202,7 @@ const SearchPage = (props) =>{
                                 />
                             </Grid>
                             <Grid item xs={12} className="mt-4">
-                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
                                     {totalItems > 0 && <div>검색 데이터 개수: {totalItems}</div>}
                                     <Button variant="contained" color="primary" onClick={() => fetchArticles(1)}>
                                         검색
