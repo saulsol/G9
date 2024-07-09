@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import {Link} from 'react-router-dom'
 import {
     Button,
     Box,
@@ -19,7 +20,11 @@ import 'flatpickr/dist/themes/material_blue.css';
 
 
 const drawerWidth = 300;
-const navItems = ['Search', 'upload'];
+const navItems = [
+    {text: 'Search', path: '/'},
+    {text: 'Upload', path: '/upload'}
+];
+
 
 const BasicLayout = ({children, props}) => {
     const { window } = props;
@@ -38,9 +43,9 @@ const BasicLayout = ({children, props}) => {
             <Divider />
             <List>
                 {navItems.map((item) => (
-                    <ListItem key={item} disablePadding>
-                        <ListItemButton sx={{ textAlign: 'center' }}>
-                            <ListItemText primary={item} />
+                    <ListItem key={item.text} disablePadding>
+                        <ListItemButton component={Link} to={item.path} sx={{ textAlign: 'center' }}>
+                            <ListItemText primary={item.text} />
                         </ListItemButton>
                     </ListItem>
                 ))}
@@ -73,8 +78,8 @@ const BasicLayout = ({children, props}) => {
                     </Typography>
                     <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
                         {navItems.map((item) => (
-                            <Button key={item} sx={{ color: '#fff' }}>
-                                {item}
+                            <Button key={item.text} component={Link} to={item.path} sx={{ color: '#fff' }}>
+                                {item.text}
                             </Button>
                         ))}
                     </Box>
