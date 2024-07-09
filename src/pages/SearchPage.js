@@ -52,8 +52,11 @@ const SearchPage = (props) =>{
             }}>
                 <Toolbar />
                 <Card>
+                    <h2 className="font-weight-bolder" style={{
+                        marginLeft :'15px'
+                    }} >DBMS Data Search</h2>
                     <CardContent>
-                        <h5 className="font-weight-bolder">Data Search</h5>
+                        <h5 className="font-weight-bolder">Project</h5>
                         <Grid container spacing={3}>
                             <Grid item xs={12} sm={4}>
                                 <FormControl fullWidth>
@@ -111,7 +114,7 @@ const SearchPage = (props) =>{
                             </Grid>
 
                             <Grid item xs={12}>
-                                <h5 className="font-weight-bolder">Data type</h5>
+                                <h5 className="font-weight-bolder">type</h5>
                                 <FormControl component="fieldset">
                                     <RadioGroup row value={dataType} onChange={(e) => setDataType(e.target.value)}>
 
@@ -127,7 +130,8 @@ const SearchPage = (props) =>{
                                 </FormControl>
                             </Grid>
                             <Grid item xs={12}>
-                            <FormControl component="fieldset">
+                                <h5 className="font-weight-bolder">테스트 데이터 여부</h5>
+                                <FormControl component="fieldset">
                                     <RadioGroup row value={isTestset} onChange={(e) => setIsTestset(e.target.value)}>
                                         <FormControlLabel value="1" control={<Radio/>} label="O"/>
                                         <FormControlLabel value="0" control={<Radio/>} label="X"/>
@@ -136,7 +140,7 @@ const SearchPage = (props) =>{
                             </Grid>
                             <Grid item xs={12} sm={6}>
                                 <FormControl fullWidth>
-                                    <InputLabel id="origin-label">Origin</InputLabel>
+                                    <h5 className="font-weight-bolder">origin</h5>
                                     <Select
                                         labelId="origin-label"
                                         id="choices-origin"
@@ -154,7 +158,7 @@ const SearchPage = (props) =>{
                             </Grid>
                             <Grid item xs={12} sm={6}>
                                 <FormControl fullWidth>
-                                    <InputLabel id="pcb-board-label">PCB Board</InputLabel>
+                                    <h5 className="font-weight-bolder">Pcb Board</h5>
                                     <Select
                                         labelId="pcb-board-label"
                                         id="choices-pcb_board"
@@ -172,8 +176,9 @@ const SearchPage = (props) =>{
                             </Grid>
                             <Grid item xs={12} sm={3}>
                                 <FormControl fullWidth>
+                                    <h5 className="font-weight-bolder">취득일 Date 범위</h5>
                                     <TextField
-                                        label="취득일 Date 범위"
+
                                         type="date"
                                         value={date}
                                         onChange={(e) => setDate(e.target.value)}
@@ -183,8 +188,9 @@ const SearchPage = (props) =>{
                             </Grid>
                             <Grid item xs={12} sm={3}>
                                 <FormControl fullWidth>
+                                    <h5 className="font-weight-bolder">취득일 Date 범위</h5>
                                     <TextField
-                                        label="취득일 Date 범위"
+
                                         type="date"
                                         value={endDate}
                                         onChange={(e) => setEndDate(e.target.value)}
@@ -193,18 +199,22 @@ const SearchPage = (props) =>{
                                 </FormControl>
                             </Grid>
                             <Grid item xs={12}>
+                                <h5 className="font-weight-bolder">파일명 포함 검색</h5>
                                 <TextField
                                     fullWidth
-                                    label="파일명 포함 검색"
                                     placeholder="파일명 검색"
                                     value={imageTitle}
                                     onChange={(e) => setImageTitle(e.target.value)}
                                 />
                             </Grid>
                             <Grid item xs={12} className="mt-4">
-                                <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+                                <div style={{display: 'center', justifyContent: 'space-between', alignItems: 'center'}}>
                                     {totalItems > 0 && <div>검색 데이터 개수: {totalItems}</div>}
-                                    <Button variant="contained" color="primary" onClick={() => fetchArticles(1)}>
+                                    <Button variant="contained" color="primary" onClick={() => fetchArticles(1)}
+                                            sx={{
+                                                    justifyContent: 'center',
+                                                    alignItems: 'center'
+                                    }}>
                                         검색
                                     </Button>
                                 </div>
@@ -213,10 +223,9 @@ const SearchPage = (props) =>{
                     </CardContent>
                 </Card>
             </Box>
-       </BasicLayout>
+        </BasicLayout>
     );
 }
-
 
 
 export default SearchPage;
