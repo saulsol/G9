@@ -17,6 +17,7 @@ import {
 } from '@mui/material';
 import 'flatpickr/dist/themes/material_blue.css';
 import BasicLayout from "../layouts/BasicLayout";
+import axios from "axios";
 
 
 
@@ -40,6 +41,85 @@ const SearchPage = (props) =>{
         console.log(`Fetching articles for page ${page}`);
     };
 
+
+    const types = [
+        { value: "pcb", text: "PCB" },
+        { value: "ocr", text: "OCR" },
+        { value: "surface", text: "surface" },
+        { value: "soldering", text: "soldering" },
+        { value: "pattern_matching", text: "pattern_matching" },
+        { value: "barcode", text: "barcode" },
+    ];
+
+    const [projects, setProjects] = useState([]);
+    const [origins, setOrigins] = useState([]);
+    const [sorts, setSorts] = useState([]);
+    const [sources, setSources] = useState([]);
+    const [pcbBoards, setPcbBoards] = useState([]);
+
+
+    const getBaseData = () => {
+        axios.get('')
+            .then((response) => {
+                const data = response.data;
+                console.log(JSON.stringify(data))
+                
+                // 프로젝트 명 삽입
+                const newPr = data.project.map(item => ({
+                        value : item[0],
+                        text : item[1]
+                    })
+                )
+                setProjects(newPr);
+                    
+
+                // 오리진 명 삽입
+                const newOrigin = data.origin.map(item => ({
+                        value : item[0],
+                        text : item[1]
+                    })
+                )
+                setOrigins(newOrigin);
+
+
+                // 소트 명 삽입
+                const newSort = data.sort.map(item => ({
+                        value : item[0],
+                        text : item[1]
+                    })
+                )
+                setSorts(newSort);
+                
+                // 소스 명 삽입
+                const newSource = data.source.map(item => ({
+                        value : item[0],
+                        text : item[1]
+                    })
+                )
+                setSources(newSource)
+
+                // PCB 명 삽입
+                const newPCB = data.pcb_board.map(item => ({
+                        value : item[0],
+                        text : item[1]
+                    })
+                )
+                setPcbBoards(newPCB);
+
+
+
+            })
+            .catch((error) => {
+                console.error('Error fetching base data:', error);
+            });
+    };
+
+
+
+    useEffect(()=>{
+        getBaseData();
+    },[]);
+
     return (
         <BasicLayout props={props}>
             <Box component="main" sx={{ p: 2,
@@ -56,18 +136,17 @@ const SearchPage = (props) =>{
                         marginLeft: '15px'
                     }}>DBMS Data Search</h2>
                     <CardContent>
-                        <h5 className="font-weight-bolder">Project</h5>
+
                         <Grid container spacing={2}>
                             <Grid item xs={12} sm={4}>
+                                <h5 className="font-weight-bolder">Project</h5>
                                 <FormControl fullWidth>
-                                    <InputLabel id="project-label">Project</InputLabel>
                                     <Select
                                         labelId="project-label"
                                         id="choices-project"
                                         value={selectedProject}
                                         onChange={(e) => setSelectedProject(e.target.value)}
                                     >
-
                                         {projects.map((project, index) => (
                                             <MenuItem key={index} value={project.value}>
                                                 {project.text}
@@ -77,8 +156,8 @@ const SearchPage = (props) =>{
                                 </FormControl>
                             </Grid>
                             <Grid item xs={12} sm={4}>
+                                <h5 className="font-weight-bolder">sort</h5>
                                 <FormControl fullWidth>
-                                    <InputLabel id="sort-label">Sort</InputLabel>
                                     <Select
                                         labelId="sort-label"
                                         id="choices-sort"
@@ -95,8 +174,8 @@ const SearchPage = (props) =>{
                                 </FormControl>
                             </Grid>
                             <Grid item xs={12} sm={4}>
+                                <h5 className="font-weight-bolder">source</h5>
                                 <FormControl fullWidth>
-                                    <InputLabel id="source-label">Source</InputLabel>
                                     <Select
                                         labelId="source-label"
                                         id="choices-source"
@@ -164,7 +243,7 @@ const SearchPage = (props) =>{
                                         value={selectedPcbBoard}
                                         onChange={(e) => setSelectedPcbBoard(e.target.value)}
                                     >
-                                        {/* 예시 PCB 보드 데이터 */}
+
                                         {pcbBoards.map((pcbBoard, index) => (
                                             <MenuItem key={index} value={pcbBoard.value}>
                                                 {pcbBoard.text}
@@ -229,32 +308,3 @@ const SearchPage = (props) =>{
 
 export default SearchPage;
 
-const projects = [
-    {value: 'project1', text: 'Project 1' },
-    { value: 'project2', text: 'Project 2' }
-];
-
-const sorts = [
-    { value: 'sort1', text: 'Sort 1' },
-    { value: 'sort2', text: 'Sort 2' }
-];
-
-const sources = [
-    { value: 'source1', text: 'Source 1' },
-    { value: 'source2', text: 'Source 2' }
-];
-
-const types = [
-    { value: 'type1', text: 'Type 1' },
-    { value: 'type2', text: 'Type 2' }
-];
-
-const origins = [
-    { value: 'origin1', text: 'Origin 1' },
-    { value: 'origin2', text: 'Origin 2' }
-];
-
-const pcbBoards = [
-    { value: 'pcbBoard1', text: 'PCB Board 1' },
-    { value: 'pcbBoard2', text: 'PCB Board 2' }
-];
