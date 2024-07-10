@@ -53,11 +53,11 @@ const SearchPage = (props) =>{
                 <Toolbar />
                 <Card>
                     <h2 className="font-weight-bolder" style={{
-                        marginLeft :'15px'
-                    }} >DBMS Data Search</h2>
+                        marginLeft: '15px'
+                    }}>DBMS Data Search</h2>
                     <CardContent>
                         <h5 className="font-weight-bolder">Project</h5>
-                        <Grid container spacing={3}>
+                        <Grid container spacing={2}>
                             <Grid item xs={12} sm={4}>
                                 <FormControl fullWidth>
                                     <InputLabel id="project-label">Project</InputLabel>
@@ -67,7 +67,7 @@ const SearchPage = (props) =>{
                                         value={selectedProject}
                                         onChange={(e) => setSelectedProject(e.target.value)}
                                     >
-                                        {/* 예시 프로젝트 데이터 */}
+
                                         {projects.map((project, index) => (
                                             <MenuItem key={index} value={project.value}>
                                                 {project.text}
@@ -103,7 +103,6 @@ const SearchPage = (props) =>{
                                         value={selectedSourceCd}
                                         onChange={(e) => setSelectedSourceCd(e.target.value)}
                                     >
-                                        {/* 예시 소스 데이터 */}
                                         {sources.map((source, index) => (
                                             <MenuItem key={index} value={source.value}>
                                                 {source.text}
@@ -147,7 +146,7 @@ const SearchPage = (props) =>{
                                         value={selectedOrigin}
                                         onChange={(e) => setSelectedOrigin(e.target.value)}
                                     >
-                                        {/* 예시 원산지 데이터 */}
+
                                         {origins.map((origin, index) => (
                                             <MenuItem key={index} value={origin.value}>
                                                 {origin.text}
@@ -212,9 +211,9 @@ const SearchPage = (props) =>{
                                     {totalItems > 0 && <div>검색 데이터 개수: {totalItems}</div>}
                                     <Button variant="contained" color="primary" onClick={() => fetchArticles(1)}
                                             sx={{
-                                                    justifyContent: 'center',
-                                                    alignItems: 'center'
-                                    }}>
+                                                justifyContent: 'center',
+                                                alignItems: 'center'
+                                            }}>
                                         검색
                                     </Button>
                                 </div>
@@ -231,7 +230,7 @@ const SearchPage = (props) =>{
 export default SearchPage;
 
 const projects = [
-    { value: 'project1', text: 'Project 1' },
+    {value: 'project1', text: 'Project 1' },
     { value: 'project2', text: 'Project 2' }
 ];
 

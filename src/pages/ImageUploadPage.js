@@ -7,9 +7,9 @@ import {
     TextField,
     Grid,
     Box,
-    Card
+    Card, Toolbar, CardContent
 } from '@mui/material';
-
+import SendIcon from '@mui/icons-material/Send';
 const ImageUploadPage = (props) => {
 
     const [connectip, setIp] = useState('10.0.0.1');
@@ -45,84 +45,149 @@ const ImageUploadPage = (props) => {
 
     return(
         <BasicLayout props={props}>
-            <Container>
-                <Card sx={{
-                    marginTop: '70px'
-                }}>
-                    <h5 className="font-weight-bolder">Data Upload</h5>
-
-                    <Box mb={4}>
-                        <Typography variant="h4" component="h2">Connect</Typography>
-                        <Grid container spacing={2}>
+            <Box component="main" sx={{ p: 2,
+            marginTop: '60px',
+            width: '100%',
+            height: '100%',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center'
+            }}>
+                <Toolbar />
+                <Card>
+                    <h2 className="font-weight-bolder" style={{
+                        marginLeft: '15px'
+                    }}>DBMS Data Search</h2>
+                    <CardContent>
+                        <Typography variant="poster" component="h3" sx={{
+                            display: 'center',
+                            marginBottom: '10px'
+                        }}>Connect</Typography>
+                        <Grid container spacing={10}>
                             <Grid item xs={12} sm={6}>
+                                <h5 className="font-weight-bolder">IP Address</h5>
                                 <TextField
                                     fullWidth
-                                    label="IP Address"
                                     value={connectip}
                                     onChange={(e) => setIp(e.target.value)}
                                 />
                             </Grid>
                             <Grid item xs={12} sm={6}>
+                                <h5 className="font-weight-bolder">port</h5>
                                 <TextField
                                     fullWidth
-                                    label="Port"
                                     value={connectport}
                                     onChange={(e) => setPort(e.target.value)}
                                 />
                             </Grid>
-                            <Grid item xs={12}>
-                                <Button variant="contained" color="primary" onClick={handleConnect}>Connect</Button>
-                                <Button variant="outlined" color="secondary" onClick={handleDisconnect}
-                                        style={{marginLeft: 8}}>Disconnect</Button>
+
+                            <Grid container sx={{
+                                marginTop : '20px',
+                                width: '100%',
+                                height: '100%',
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center'
+                            }}>
+                                <Button variant="outlined" color="primary" onClick={handleConnect} endIcon={<SendIcon />}>Connect</Button>
+                                <Button variant="outlined" color="secondary" onClick={handleDisconnect} style={{marginLeft: 30}}>Disconnect</Button>
+
                             </Grid>
+                            <Typography variant="body1" sx={{
+                                marginTop: '10px',
+                                width: '100%',
+                                height: '100%',
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center'
+                            }}>Result of connect
+                                : {receiveConnect}</Typography>
                         </Grid>
-                        <Typography variant="body1">Result of connect: {receiveConnect}</Typography>
-                    </Box>
 
-                    <Box mb={4}>
-                        <Typography variant="h4" component="h2">Get Image</Typography>
-                        <TextField
-                            fullWidth
-                            label="Path"
-                            value={imagepath}
-                            onChange={(e) => setImagePath(e.target.value)}
-                            style={{marginBottom: 8}}
-                        />
-                        <Button variant="contained" color="primary" onClick={handleGetImage}>Get Image</Button>
-                        <Typography variant="body1">Result of Get Image: {receiveGetImage}</Typography>
-                        {imageName && <img src={imageName} alt="BMP"/>}
-                    </Box>
+                        <Grid container spacing={10}>
+                            <Grid item xs={12}>
+                                <Typography variant="poster" component="h3" sx={{
+                                    display: 'center',
+                                    marginBottom: '60px'
+                                }}>Get image</Typography>
 
-                    <Box mb={4}>
-                        <Typography variant="h4" component="h2">Send Message</Typography>
-                        <Grid container spacing={2}>
-                            <Grid item xs={12} sm={6}>
+                                <h5 className="font-weight-bolder">IP Address</h5>
                                 <TextField
                                     fullWidth
-                                    label="Message"
-                                    value={sendFieldMessage}
-                                    onChange={(e) => setMessage(e.target.value)}
+                                    label="Path"
+                                    value={imagepath}
+                                    onChange={(e) => setImagePath(e.target.value)}
+                                    style={{marginBottom: 8}}
                                 />
                             </Grid>
-                            <Grid item xs={12} sm={6}>
-                                <TextField
-                                    fullWidth
-                                    label="Hex Data"
-                                    value={sendFieldData}
-                                    onChange={(e) => setData(e.target.value)}
-                                />
+                            <Grid container sx={{
+                                marginTop : '20px',
+                                justifyContent: 'center',
+                                alignItems: 'center'
+                            }}>
+                                <Button variant="outlined" color="primary" onClick={handleGetImage}>Get Image</Button>
+
                             </Grid>
-                            <Grid item xs={12}>
-                                <Button variant="contained" color="primary" onClick={sendData}>Send message to
-                                    server</Button>
-                            </Grid>
+                            <Typography variant="body1" sx={{
+                                marginTop: '10px',
+                                width: '100%',
+                                height: '100%',
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center'
+                            }}>Result of Get Image: {receiveGetImage}</Typography>
+                            {imageName && <img src={imageName} alt="BMP"/>}
                         </Grid>
-                        <Typography variant="body1">Response from server: {receivePost}</Typography>
-                        {jsonResponse && <pre>{JSON.stringify(jsonResponse, null, 2)}</pre>}
-                    </Box>
+
+                        {/*get image*/}
+                        <Grid container spacing={10}>
+                            <Grid item xs={12}>
+                                <Typography variant="poster" component="h3" sx={{
+                                    display: 'center',
+                                    marginBottom: '60px'
+                                }}>Send message</Typography>
+
+                                <Grid container spacing={10}>
+                                    <Grid item xs={12} sm={6}>
+                                        <h5 className="font-weight-bolder">message</h5>
+                                        <TextField
+                                            fullWidth
+                                            value={sendFieldMessage}
+                                            onChange={(e) => setMessage(e.target.value)}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12} sm={6}>
+                                        <h5 className="font-weight-bolder">Hex Data</h5>
+                                        <TextField
+                                            fullWidth
+                                            value={sendFieldData}
+                                            onChange={(e) => setData(e.target.value)}
+                                        />
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+                            <Grid container sx={{
+                                marginTop : '20px',
+                                justifyContent: 'center',
+                                alignItems: 'center'
+                            }}>
+                                <Button variant="outlined" color="primary" onClick={handleGetImage}>Get Image</Button>
+
+                            </Grid>
+                            <Typography variant="body1" sx={{
+                                marginTop: '10px',
+                                width: '100%',
+                                height: '100%',
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center'
+                            }}>Response from server : {receivePost}</Typography>
+                            {jsonResponse && <pre>{JSON.stringify(jsonResponse, null, 2)}</pre>}
+                        </Grid>
+
+                    </CardContent>
                 </Card>
-            </Container>
-
+            </Box>
         </BasicLayout>
     );
 }
