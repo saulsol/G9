@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {
     Card,
     CardContent,
@@ -13,7 +13,7 @@ import {
     TextField,
     Grid,
     Box,
-    Toolbar
+    Toolbar, Typography
 } from '@mui/material';
 import 'flatpickr/dist/themes/material_blue.css';
 import BasicLayout from "../layouts/BasicLayout";
@@ -56,6 +56,48 @@ const SearchPage = (props) =>{
     const [sorts, setSorts] = useState([]);
     const [sources, setSources] = useState([]);
     const [pcbBoards, setPcbBoards] = useState([]);
+
+
+    // 연결 수립 가능한지, 이미지 관련 상태관리
+    const [connectip, setIp] = useState('10.0.0.1');
+    const [connectport, setPort] = useState('5001');
+    const [receiveConnect, setConnectMessage] = useState('');
+
+    const [imagepath, setImagePath] = useState('');
+    const [receiveGetImage, setGetImageMessage] = useState('');
+    const [imageName, setImageName] = useState('');
+
+    const [sendFieldMessage, setMessage] = useState('');
+    const [sendFieldData, setData] = useState('');
+    const [receiveGet, setGetMessage] = useState('');
+    const [receivePost, setPostMessage] = useState('');
+    const [jsonResponse, setJsonResponse] = useState(null);
+
+    const fileInputRef = useRef(null);
+
+    const handleConnect = async () => {
+
+    }
+
+    const handleDisconnect = async () => {
+
+    }
+
+    const handleGetImage = async () => {
+        fileInputRef.current.click();
+    }
+
+
+    // 반입 규정으로 인한 기능 제작 보류
+    const handleFileChange = (event) => {
+        const file = event.target.files[0];
+        setImagePath(file.name);
+
+    }
+
+    const sendData = async () => {
+
+    }
 
 
     const getBaseData = () => {
@@ -146,6 +188,7 @@ const SearchPage = (props) =>{
                                         id="choices-project"
                                         value={selectedProject}
                                         onChange={(e) => setSelectedProject(e.target.value)}
+                                        sx={{ width:'740px' }}
                                     >
                                         {projects.map((project, index) => (
                                             <MenuItem key={index} value={project.value}>
@@ -156,13 +199,14 @@ const SearchPage = (props) =>{
                                 </FormControl>
                             </Grid>
                             <Grid item xs={12} sm={4}>
-                                <h5 className="font-weight-bolder">sort</h5>
+                                <h5 className="font-weight-bolder">Sort</h5>
                                 <FormControl fullWidth>
                                     <Select
                                         labelId="sort-label"
                                         id="choices-sort"
                                         value={selectedSort}
                                         onChange={(e) => setSelectedSort(e.target.value)}
+                                        sx={{ width:'740px' }}
                                     >
                                         {/* 예시 정렬 데이터 */}
                                         {sorts.map((sort, index) => (
@@ -181,6 +225,7 @@ const SearchPage = (props) =>{
                                         id="choices-source"
                                         value={selectedSourceCd}
                                         onChange={(e) => setSelectedSourceCd(e.target.value)}
+                                        sx={{ width:'740px'}}
                                     >
                                         {sources.map((source, index) => (
                                             <MenuItem key={index} value={source.value}>
@@ -224,6 +269,7 @@ const SearchPage = (props) =>{
                                         id="choices-origin"
                                         value={selectedOrigin}
                                         onChange={(e) => setSelectedOrigin(e.target.value)}
+                                        sx={{ minWidth: '200px' }}
                                     >
 
                                         {origins.map((origin, index) => (
@@ -242,6 +288,7 @@ const SearchPage = (props) =>{
                                         id="choices-pcb_board"
                                         value={selectedPcbBoard}
                                         onChange={(e) => setSelectedPcbBoard(e.target.value)}
+                                        sx={{ minWidth: '200px' }}
                                     >
 
                                         {pcbBoards.map((pcbBoard, index) => (
@@ -276,6 +323,38 @@ const SearchPage = (props) =>{
                                     />
                                 </FormControl>
                             </Grid>
+
+                            <Grid item xs={12}>
+                                <h5 className="font-weight-bolder">이미지 업로드</h5>
+                                <TextField
+                                    fullWidth
+                                    placeholder="이미지 주소"
+                                    value={imagepath}
+                                    onChange={(e) => setImagePath(e.target.value)}
+                                    style={{marginBottom: 8}}
+                                />
+                                <div style={{
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center'
+                                }}>
+                                    <input type={"file"} style={{display: 'none'}} ref={fileInputRef}
+                                           onChange={handleFileChange}/>
+                                    <Button variant="outlined" color="primary" onClick={handleGetImage} sx={{
+                                        marginTop : '20px',
+                                    }}>이미지 파일 갖고 오기</Button>
+
+                                </div>
+                                <Typography variant="body1" sx={{
+                                    marginTop : '30px',
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center'
+                                }}>Result of Get Image: {receiveGetImage}</Typography>
+                                {imageName && <img src={imageName} />}
+                            </Grid>
+
+
                             <Grid item xs={12}>
                                 <h5 className="font-weight-bolder">파일명 포함 검색</h5>
                                 <TextField
@@ -286,17 +365,19 @@ const SearchPage = (props) =>{
                                 />
                             </Grid>
                             <Grid item xs={12} className="mt-4">
-                                <div style={{display: 'center', justifyContent: 'space-between', alignItems: 'center'}}>
-                                    {totalItems > 0 && <div>검색 데이터 개수: {totalItems}</div>}
-                                    <Button variant="contained" color="primary" onClick={() => fetchArticles(1)}
-                                            sx={{
-                                                justifyContent: 'center',
-                                                alignItems: 'center'
-                                            }}>
+                                <div style={{
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center'
+                                }}>
+                                    <Button variant="outlined" color="primary" onClick={() => fetchArticles(1)}>
                                         검색
                                     </Button>
                                 </div>
                             </Grid>
+
+
+
                         </Grid>
                     </CardContent>
                 </Card>

@@ -1,7 +1,6 @@
 import BasicLayout from "../layouts/BasicLayout";
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {
-    Container,
     Typography,
     Button,
     TextField,
@@ -26,6 +25,9 @@ const ImageUploadPage = (props) => {
     const [receivePost, setPostMessage] = useState('');
     const [jsonResponse, setJsonResponse] = useState(null);
 
+    const fileInputRef = useRef(null);
+
+
     const handleConnect = async () => {
 
     }
@@ -35,12 +37,22 @@ const ImageUploadPage = (props) => {
     }
 
     const handleGetImage = async () => {
+        fileInputRef.current.click();
+    }
+
+
+    // 반입 규정으로 인한 기능 제작 보류
+    const handleFileChange = (event) => {
+        const file = event.target.files[0];
+        setImagePath(file.name);
 
     }
 
     const sendData = async () => {
 
     }
+
+
 
 
     return(
@@ -63,6 +75,7 @@ const ImageUploadPage = (props) => {
                             display: 'center',
                             marginBottom: '10px'
                         }}>Connect</Typography>
+
                         <Grid container spacing={10}>
                             <Grid item xs={12} sm={6}>
                                 <h5 className="font-weight-bolder">IP Address</h5>
@@ -111,10 +124,9 @@ const ImageUploadPage = (props) => {
                                     marginBottom: '60px'
                                 }}>Get image</Typography>
 
-                                <h5 className="font-weight-bolder">IP Address</h5>
+                                <h5 className="font-weight-bolder">Path</h5>
                                 <TextField
                                     fullWidth
-                                    label="Path"
                                     value={imagepath}
                                     onChange={(e) => setImagePath(e.target.value)}
                                     style={{marginBottom: 8}}
@@ -125,7 +137,13 @@ const ImageUploadPage = (props) => {
                                 justifyContent: 'center',
                                 alignItems: 'center'
                             }}>
-                                <Button variant="outlined" color="primary" onClick={handleGetImage}>Get Image</Button>
+
+
+                                <div>
+                                    <input type={"file"} accept={"C:"} style={{display : 'none'}} ref={fileInputRef} onChange={handleFileChange}/>
+                                    <Button variant="outlined" color="primary" onClick={handleGetImage}>Get Image</Button>
+                                </div>
+
 
                             </Grid>
                             <Typography variant="body1" sx={{
